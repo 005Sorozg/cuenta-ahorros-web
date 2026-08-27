@@ -1,11 +1,6 @@
-// ------------------------------------------------------------
-// ESTADO: el saldo de la cuenta vive en esta variable
-// ------------------------------------------------------------
+
 let saldo = 0;
 
-// ------------------------------------------------------------
-// UTILIDAD: formatear números como pesos colombianos
-// ------------------------------------------------------------
 function formatear(valor) {
   return "$" + valor.toLocaleString("es-CO", { maximumFractionDigits: 2 });
 }
@@ -26,9 +21,8 @@ function retirar(monto) {
   saldo -= monto;
   return { ok: true, mensaje: `Retiro de ${formatear(monto)} realizado.` };
 }
-// ------------------------------------------------------------
-// INTERFAZ: conectar los botones con las reglas de negocio
-// ------------------------------------------------------------
+
+
 const setupSection = document.getElementById("setup");
 const accountSection = document.getElementById("account");
 const initialBalanceInput = document.getElementById("initial-balance");
