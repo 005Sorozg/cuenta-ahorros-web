@@ -16,6 +16,16 @@ function depositar(monto) {
   saldo += monto;
   return { ok: true, mensaje: `Depósito de ${formatear(monto)} realizado.` };
 }
+function retirar(monto) {
+  if (Number.isNaN(monto) || monto <= 0) {
+    return { ok: false, mensaje: "El monto de retiro debe ser mayor que cero." };
+  }
+  if (monto > saldo) {
+    return { ok: false, mensaje: "Saldo insuficiente para realizar el retiro." };
+  }
+  saldo -= monto;
+  return { ok: true, mensaje: `Retiro de ${formatear(monto)} realizado.` };
+}
 // ------------------------------------------------------------
 // INTERFAZ: conectar los botones con las reglas de negocio
 // ------------------------------------------------------------
@@ -40,6 +50,14 @@ document.getElementById("btn-create").addEventListener("click", () => {
 });
 document.getElementById("btn-deposit").addEventListener("click", () => {
   const resultado = depositar(Number(amountInput.value));
+  agregarMovimiento(resultado.mensaje, resultado.ok);
+  if (resultado.ok) {
+    actualizarSaldo();
+    amountInput.value = "";
+  }
+});
+document.getElementById("btn-withdraw").addEventListener("click", () => {
+  const resultado = retirar(Number(amountInput.value));
   agregarMovimiento(resultado.mensaje, resultado.ok);
   if (resultado.ok) {
     actualizarSaldo();
