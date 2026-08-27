@@ -9,7 +9,13 @@ let saldo = 0;
 function formatear(valor) {
   return "$" + valor.toLocaleString("es-CO", { maximumFractionDigits: 2 });
 }
-
+function depositar(monto) {
+  if (Number.isNaN(monto) || monto <= 0) {
+    return { ok: false, mensaje: "El monto de depósito debe ser mayor que cero." };
+  }
+  saldo += monto;
+  return { ok: true, mensaje: `Depósito de ${formatear(monto)} realizado.` };
+}
 // ------------------------------------------------------------
 // INTERFAZ: conectar los botones con las reglas de negocio
 // ------------------------------------------------------------
@@ -32,11 +38,15 @@ document.getElementById("btn-create").addEventListener("click", () => {
   actualizarSaldo();
   agregarMovimiento(`Cuenta abierta con saldo inicial de ${formatear(saldo)}.`, true);
 });
+document.getElementById("btn-deposit").addEventListener("click", () => {
+  const resultado = depositar(Number(amountInput.value));
+  agregarMovimiento(resultado.mensaje, resultado.ok);
+  if (resultado.ok) {
+    actualizarSaldo();
+    amountInput.value = "";
+  }
+});
 
-// NOTA: los botones de Depositar y Retirar todavía no hacen nada.
-// Cada uno se implementa en su propia rama:
-//   - feature/deposit  -> agrega la función depositar() y su botón
-//   - feature/withdraw -> agrega la función retirar() y su botón
 
 function actualizarSaldo() {
   balanceEl.textContent = formatear(saldo);
