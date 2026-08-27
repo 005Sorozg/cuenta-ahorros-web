@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuenta de Ahorros</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="block">
+  <div class="block__header">
+    <h1 class="block__title">Cuenta de ahorros</h1>
+  </div>
+
+  <div class="block__body">
+
+    <!-- Pantalla 1: crear cuenta -->
+    <section id="setup" class="setup">
+      <p><strong>Ingrese el saldo inicial para abrir la cuenta.</strong></p>
+      <div class="field">
+        <input type="number" id="initial-balance" placeholder="0" min="0" step="0.01">
+        <button class="btn-primary" id="btn-create" style="width:auto;">Abrir cuenta</button>
+      </div>
+    </section>
+
+    <!-- Pantalla 2: cuenta activa -->
+    <section id="account" class="hidden">
+      <div class="balance-block">
+        <p class="balance-label">Saldo disponible</p>
+        <p class="balance-value" id="balance">$0</p>
+      </div>
+
+      <div class="actions">
+        <div class="field">
+          <input type="number" id="amount" placeholder="Monto" min="0" step="0.01">
+        </div>
+        <button class="btn-deposit" id="btn-deposit">Depositar</button>
+        <button class="btn-withdraw" id="btn-withdraw">Retirar</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="movements">
+    <p class="movements-label">Movimientos</p>
+    <ul class="movements-list" id="movements-list">
+      <li class="movements-empty">Aún no hay movimientos.</li>
+    </ul>
+  </div>
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+:root {
+  --paper: #f6f3ec;
+  --paper-line: #e2dbc8;
+  --ink: #1c3d3f;
+  --ink-soft: #4a6567;
+  --teal: #1c5c5e;
+  --teal-deep: #4d174b;
+  --gold: #b9862f;
+  --good: #2f6d4f;
+  --bad: #a13e34;
+  --mono: "IBM Plex Mono", "Courier New", monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --sans: "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #4d174b 0%, #332132 55%, #0f0a0f 100%);
+  font-family: var(--sans);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.block {
+  width: 100%;
+  max-width: 480px;
+  height: 620px;
+  display: flex;
+  flex-direction: column;
+  background: #fffdf8;
+  border: 1px solid var(--paper-line);
+  border-radius: 4px;
+  box-shadow: 0 20px 40px -20px rgba(18, 63, 64, 0.35);
+  overflow: hidden;
+}
+
+.block__header {
+  background: var(--teal-deep);
+  color: #f4efe1;
+  padding: 22px 28px 20px;
+  position: relative;
+}
+
+
+
+.block__title {
+  font-family: var(--serif);
+  font-size: 26px;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.block__body {
+  padding: 34px 28px 8px;
+}
+
+.setup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setup p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.balance-block {
+  text-align: center;
+  padding: 6px 0 20px;
+  border-bottom: 1px dashed var(--paper-line);
+  margin-bottom: 20px;
+}
+
+.balance-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+}
+
+.balance-value {
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--teal-deep);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.18s ease;
+  overflow-wrap: anywhere;
+  line-height: 1.15;
+}
+
+.balance-value.pulse {
+  transform: scale(1.06);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.field {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+}
+
+input[type="number"] {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid var(--paper-line);
+  border-radius: 3px;
+  background: #fffdf8;
+  color: var(--ink);
+}
+
+input[type="number"]:focus {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+}
+
+button {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+button:hover { filter: brightness(1.08); }
+button:active { filter: brightness(0.95); }
+button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.btn-deposit {
+  background: #4d174b;
+  color: #f4efe1;
+}
+
+.btn-withdraw {
+  background: #fffdf8;
+  color: var(--bad);
+  border-color: var(--bad);
+}
+
+.btn-primary {
+  background: var(--teal-deep);
+  color: #f4efe1;
+  width: 100%;
+}
+
+.movements {
+  border-top: 1px solid var(--paper-line);
+  padding: 14px 28px 22px;
+  background: #fbf8f1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.movements-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.movements-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.movements-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--paper-line);
+  animation: appear 0.2s ease;
+}
+
+.movements-entry.good .amount { color: var(--good); }
+.movements-entry.bad .amount { color: var(--bad); }
+.movements-entry .desc {
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+.movements-entry .amount { flex-shrink: 0; }
+
+.movements-empty {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

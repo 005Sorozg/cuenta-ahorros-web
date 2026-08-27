@@ -1,0 +1,60 @@
+// ------------------------------------------------------------
+// ESTADO: el saldo de la cuenta vive en esta variable
+// ------------------------------------------------------------
+let saldo = 0;
+
+// ------------------------------------------------------------
+// UTILIDAD: formatear números como pesos colombianos
+// ------------------------------------------------------------
+function formatear(valor) {
+  return "$" + valor.toLocaleString("es-CO", { maximumFractionDigits: 2 });
+}
+
+// ------------------------------------------------------------
+// INTERFAZ: conectar los botones con las reglas de negocio
+// ------------------------------------------------------------
+const setupSection = document.getElementById("setup");
+const accountSection = document.getElementById("account");
+const initialBalanceInput = document.getElementById("initial-balance");
+const balanceEl = document.getElementById("balance");
+const amountInput = document.getElementById("amount");
+const movementsList = document.getElementById("movements-list");
+
+document.getElementById("btn-create").addEventListener("click", () => {
+  const inicial = initialBalanceInput.value === "" ? 0 : Number(initialBalanceInput.value);
+  if (Number.isNaN(inicial) || inicial < 0) {
+    alert("El saldo inicial debe ser un número mayor o igual a cero.");
+    return;
+  }
+  saldo = inicial;
+  setupSection.classList.add("hidden");
+  accountSection.classList.remove("hidden");
+  actualizarSaldo();
+  agregarMovimiento(`Cuenta abierta con saldo inicial de ${formatear(saldo)}.`, true);
+});
+
+// NOTA: los botones de Depositar y Retirar todavía no hacen nada.
+// Cada uno se implementa en su propia rama:
+//   - feature/deposit  -> agrega la función depositar() y su botón
+//   - feature/withdraw -> agrega la función retirar() y su botón
+
+function actualizarSaldo() {
+  balanceEl.textContent = formatear(saldo);
+  balanceEl.classList.add("pulse");
+  setTimeout(() => balanceEl.classList.remove("pulse"), 180);
+}
+
+function agregarMovimiento(mensaje, ok) {
+  const empty = movementsList.querySelector(".movements-empty");
+  if (empty) empty.remove();
+
+  const hora = new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
+  const li = document.createElement("li");
+  li.className = "movements-entry " + (ok ? "good" : "bad");
+  li.innerHTML = `
+    <span class="desc">${hora} — ${mensaje}</span>
+    <span class="amount">${ok ? "✔" : "✘"}</span>
+  `;
+  movementsList.prepend(li);
+}
